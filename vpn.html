@@ -1,37 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>VPN Required</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        ol {
-            margin-left: 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>VPN Required</h1>
-    <p>For enhanced security and privacy, we require the use of a VPN to access our website.</p>
-    <p>Please follow the instructions below to set up and use a VPN:</p>
-    <ol>
-        <li>Choose a reputable VPN provider.</li>
-        <li>Download and install the VPN software on your device.</li>
-        <li>Open the VPN software and connect to a server location.</li>
-        <li>Once connected, visit our website using your preferred web browser.</li>
-    </ol>
-    <p>If you need more detailed instructions, please refer to the VPN provider's website or support documentation.</p>
+<script>
+    function redirectIfVPN() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 0 && !xhr.getResponseHeader("Content-Type")) {
+                    window.location.href = "index.html"; // Replace "index.html" with the filename or URL of your main website page
+                }
+            }
+        };
+        xhr.open("HEAD", window.location.href);
+        xhr.send();
+    }
     
-    <script>
-        if (!navigator.userAgent.includes("VPN")) {
-            window.location.href = "vpn.html";
-        }
-    </script>
-</body>
-</html>
+    redirectIfVPN();
+</script>
