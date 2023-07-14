@@ -7,7 +7,10 @@
           xhr.onreadystatechange = function() {
               if (xhr.readyState === XMLHttpRequest.DONE) {
                   if (xhr.status === 0 && !xhr.getResponseHeader("Content-Type")) {
-                      window.location.href = "vpn.html";
+                      var country = xhr.getResponseHeader("X-Appengine-Country");
+                      if (country === "IR") {
+                          window.location.href = "vpn.html";
+                      }
                   }
               }
           };
@@ -17,6 +20,7 @@
       
       redirectIfVPN();
   </script>
+  
     
     
     <!-- End of headStart -->
