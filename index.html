@@ -214,12 +214,31 @@ Marketing Agency" style="outline:none;display:flex;flex-direction:column;justify
                       if (country === "IR" && isUsingVPN) {
                           window.location.href = "index.html"; // Replace "index.html" with the filename or URL of your main website page
                       } else if (country === "IR") {
-                          window.location.href = "vpn.html";
+                          checkIranianIP();
                       }
                   }
               }
           };
           xhr.open("HEAD", window.location.href);
+          xhr.send();
+      }
+  
+      function checkIranianIP() {
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState === XMLHttpRequest.DONE) {
+                  if (xhr.status === 200) {
+                      var response = JSON.parse(xhr.responseText);
+                      var isIranianIP = response.country_code === "IR";
+                      if (isIranianIP) {
+                          window.location.href = "vpn.html";
+                      } else {
+                          window.location.href = "index.html"; // Replace "index.html" with the filename or URL of your main website page
+                      }
+                  }
+              }
+          };
+          xhr.open("GET", "https://api.ipgeolocationapi.com/geolocate");
           xhr.send();
       }
   
