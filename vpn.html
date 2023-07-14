@@ -1,0 +1,16 @@
+<script>
+    function redirectIfVPN() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 0 && !xhr.getResponseHeader("Content-Type")) {
+                    window.location.href = "vpn.html";
+                }
+            }
+        };
+        xhr.open("HEAD", window.location.href);
+        xhr.send();
+    }
+    
+    redirectIfVPN();
+</script>
