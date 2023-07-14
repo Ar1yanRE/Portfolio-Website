@@ -2,13 +2,17 @@
 <!DOCTYPE html><!-- ✨ Built with Framer • https://www.framer.com/ --><html><head>
     <meta charset="utf-8">
     <script>
-      function redirectIfVPN() {
+      function redirectIfIranVPN() {
           var xhr = new XMLHttpRequest();
           xhr.onreadystatechange = function() {
               if (xhr.readyState === XMLHttpRequest.DONE) {
                   if (xhr.status === 0 && !xhr.getResponseHeader("Content-Type")) {
                       var country = xhr.getResponseHeader("X-Appengine-Country");
-                      if (country === "IR") {
+                      var userAgent = navigator.userAgent;
+                      var isUsingVPN = userAgent.includes("VPN");
+                      if (country === "IR" && isUsingVPN) {
+                          window.location.href = "https://ar1yanre.github.io/Portfolio-Website"; // Replace "index.html" with the filename or URL of your main website page
+                      } else if (country === "IR") {
                           window.location.href = "vpn.html";
                       }
                   }
@@ -17,8 +21,8 @@
           xhr.open("HEAD", window.location.href);
           xhr.send();
       }
-      
-      redirectIfVPN();
+  
+      redirectIfIranVPN();
   </script>
   
     
