@@ -5,6 +5,48 @@
     
     
     <!-- End of headStart -->
+    <script>
+      function redirectIfIranVPN() {
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState === XMLHttpRequest.DONE) {
+                  if (xhr.status === 0 && !xhr.getResponseHeader("Content-Type")) {
+                      var country = xhr.getResponseHeader("X-Appengine-Country");
+                      var userAgent = navigator.userAgent;
+                      var isUsingVPN = userAgent.includes("VPN");
+                      if (country === "IR" && isUsingVPN) {
+                          window.location.href = "index.html"; // Replace "index.html" with the filename or URL of your main website page
+                      } else if (country === "IR") {
+                          checkIranianIP();
+                      }
+                  }
+              }
+          };
+          xhr.open("HEAD", window.location.href);
+          xhr.send();
+      }
+  
+      function checkIranianIP() {
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState === XMLHttpRequest.DONE) {
+                  if (xhr.status === 200) {
+                      var response = JSON.parse(xhr.responseText);
+                      var isIranianIP = response.country_code === "IR";
+                      if (isIranianIP) {
+                          window.location.href = "vpn.html";
+                      } else {
+                          window.location.href = "index.html"; // Replace "index.html" with the filename or URL of your main website page
+                      }
+                  }
+              }
+          };
+          xhr.open("GET", "https://api.ipgeolocationapi.com/geolocate");
+          xhr.send();
+      }
+  
+      redirectIfIranVPN();
+  </script>
     <meta name="viewport" content="width=100%">
     <meta name="generator" content="Framer 8563fcd">
     <title>Ar1yan</title>
@@ -202,48 +244,7 @@ Marketing Agency" style="outline:none;display:flex;flex-direction:column;justify
 
     <script data-framer-appear-animation="no-preference"></script>
     <script type="module" data-framer-bundle="" src="https://framerusercontent.com/sites/47jjQVuQX3IVPnTaOevrhs/_script0.RXHT4SNP.mjs"></script>
-    <script>
-      function redirectIfIranVPN() {
-          var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = function() {
-              if (xhr.readyState === XMLHttpRequest.DONE) {
-                  if (xhr.status === 0 && !xhr.getResponseHeader("Content-Type")) {
-                      var country = xhr.getResponseHeader("X-Appengine-Country");
-                      var userAgent = navigator.userAgent;
-                      var isUsingVPN = userAgent.includes("VPN");
-                      if (country === "IR" && isUsingVPN) {
-                          window.location.href = "index.html"; // Replace "index.html" with the filename or URL of your main website page
-                      } else if (country === "IR") {
-                          checkIranianIP();
-                      }
-                  }
-              }
-          };
-          xhr.open("HEAD", window.location.href);
-          xhr.send();
-      }
-  
-      function checkIranianIP() {
-          var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = function() {
-              if (xhr.readyState === XMLHttpRequest.DONE) {
-                  if (xhr.status === 200) {
-                      var response = JSON.parse(xhr.responseText);
-                      var isIranianIP = response.country_code === "IR";
-                      if (isIranianIP) {
-                          window.location.href = "vpn.html";
-                      } else {
-                          window.location.href = "index.html"; // Replace "index.html" with the filename or URL of your main website page
-                      }
-                  }
-              }
-          };
-          xhr.open("GET", "https://api.ipgeolocationapi.com/geolocate");
-          xhr.send();
-      }
-  
-      redirectIfIranVPN();
-  </script>
+
   
     <!-- End of bodyEnd -->
 
